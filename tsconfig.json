@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",       // Specify output directory
+    "rootDir": "./src",        // Specify the root directory of input files
+    "module": "CommonJS",      // Specify module code generation
+    "target": "es6",           // Specify ECMAScript target version
+    "esModuleInterop": true,   // Enable interoperability between CommonJS and ES Modules
+    "strict": true             // Enable strict type-checking options
+  },
+  "include": [
+    "src/server.ts",
+    "src/**/*"                 // Include all TypeScript files in the src directory
+, "src/server.ts"  ],
+  "exclude": [
+    "node_modules",            // Exclude node_modules
+    "build"                    // Exclude build directory
+  ]
+}
