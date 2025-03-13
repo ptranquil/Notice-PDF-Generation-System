@@ -7,7 +7,7 @@ const appRouter = Router();
 
 appRouter.post("/templates", createTemplate);
 appRouter.post("/notices", createNotice);
-appRouter.use("/pdfs/generate-pdf/:noticeId", generatePDF);
+appRouter.use("/generate-pdf/:noticeId", generatePDF);
 appRouter.use("/download/:filename", downloadPDF);
 
 export default appRouter;

@@ -8,7 +8,7 @@ module.exports = {
     env: {
       NODE_ENV: "development",
       PORT: 3000,
-      MONGO_URI: "mongodb://172.16.1.40:27017/notice-pdf",
+      MONGO_URI: "mongodb://127.0.0.1:27017/notice-pdf",
       AWS_S3_BUCKET: 'notice-pdf-generator-bucket',
       AWS_REGION: '',
       AWS_ACCESS_KEY_ID: '',
@@ -18,7 +18,7 @@ module.exports = {
     env_production: {
       NODE_ENV: "development",
       PORT: 3000,
-      MONGO_URI: "mongodb://172.16.1.40:27017/notice-pdf",
+      MONGO_URI: "<mongodb_url>",
       AWS_S3_BUCKET: 'notice-pdf-generator-bucket',
       AWS_REGION: '',
       AWS_ACCESS_KEY_ID: '',

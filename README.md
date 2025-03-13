@@ -3,6 +3,12 @@
 ## Overview
 The Notice PDF Generation System is designed to efficiently convert HTML templates into PDFs, store them in AWS S3, and provide secure download links using pre-signed URLs. It is built with a focus on scalability, performance, and resource efficiency.
 
+## Architecture Diagram
+![alt text](notice_pdf_generation_system_architecture_diagram.png)
+
+## Documentation
+- The Design Documentation is added in the github named ***Notice-PDF-Generation-System-Doc.pdf***
+
 ## Tech Stack
 - **Node.js** with **TypeScript**
 - **MongoDB** for data storage
@@ -15,9 +21,9 @@ The Notice PDF Generation System is designed to efficiently convert HTML templat
 
 ### Prerequisites
 - **Node.js** (v16+ recommended)
-- **Docker** (for containerized deployment)
+- **Docker** (for containerized deployment) : Provide proper URL
 - **MongoDB** (local or cloud instance)
-- **AWS S3** (for storage) **AWS Access Key & Secret Key with S3 Bucket Name is required as the PDF file is getting stored in the bucket. Also make sure that the S3 bucket is publicly accessible**
+- **AWS S3** (for storage) : **AWS Access Key & Secret Key with S3 Bucket Name is required as the PDF file is getting stored in the bucket. Also make sure that the S3 bucket is publicly accessible**
 - Use the below bucket policy to make the S3 bucket publicly accessible
 
 ```bash
@@ -25,11 +31,16 @@ The Notice PDF Generation System is designed to efficiently convert HTML templat
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "PublicRead",
-            "Effect": "Allow",
+            "Sid": "BlockPublicAccess",
+            "Effect": "Deny",
             "Principal": "*",
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::<bucket_name>/*"
+            "Resource": "arn:aws:s3:::<bucket_name>/*",
+            "Condition": {
+                "Bool": {
+                    "aws:SecureTransport": "false"
+                }
+            }
         }
     ]
 }
@@ -69,7 +80,7 @@ Changes to be done in pm2.config.cjs file
 ### Steps to Generate PDF
 1. Generate the template using the *POST /api/v1/templates*
 2. Get the template_id and create notice using *POST /api/v1/notices*
-3. Based on the notice_id generate pdf using *POST /api/v1/pdfs/generate-pdf/notice_id*
+3. Based on the notice_id generate pdf using *POST /api/v1/generate-pdf/notice_id*
 4. Get the presigned URL using the fileName got in the ***generate-pdf*** API using *POST /api/v1/download/fileName*
 5. Access the pdf using the presigned URL
 
@@ -79,6 +90,3 @@ Changes to be done in pm2.config.cjs file
 - Handles **500-600 PDFs per minute**.
 - Optimized Puppeteer page pooling for memory efficiency.
 - Uses **PQueue** to control concurrent PDF generation tasks.
-
-## Architecture Diagram
-![alt text](notice_pdf_generation_system_architecture_diagram.png)

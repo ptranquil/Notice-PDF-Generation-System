@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "09a58a9f-7231-4015-a942-35d5a3f3c613",
+		"name": "notice-pdf-generation-system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15827923"
+	},
+	"item": [
+		{
+			"name": "Notice",
+			"item": [
+				{
+					"name": "Create Template",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"legal_notice\",\n    \"content\": \"<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Legal Notice</title><style>body { font-family: 'Times New Roman', serif; margin: 40px; padding: 20px; border: 2px solid black; line-height: 1.6; } .header { text-align: center; font-size: 24px; font-weight: bold; text-decoration: underline; } .content { margin-top: 20px; font-size: 16px; } .info { margin-bottom: 20px; font-weight: bold; } .signature { margin-top: 40px; text-align: right; font-weight: bold; } .footer { margin-top: 50px; text-align: center; font-size: 12px; border-top: 1px solid black; padding-top: 10px; }</style></head><body><div class='header'>LEGAL NOTICE</div><div class='info'><p><strong>Notice Number:</strong> {{notice_number}}</p><p><strong>Date:</strong> {{notice_date}}</p><p><strong>Recipient Name:</strong> {{recipient_name}}</p><p><strong>Address:</strong> {{recipient_address}}</p></div><div class='content'><p>Dear {{recipient_name}},</p><p>This legal notice is to inform you that {{notice_reason}}.</p><p>As per the agreement dated {{agreement_date}}, you are required to take action by {{due_date}}. Failure to comply may result in further legal consequences.</p><p>For any clarifications, you may contact us at {{contact_details}}.</p></div><div class='signature'>Sincerely,<br>{{sender_name}}<br>{{sender_designation}}<br>{{company_name}}</div><div class='footer'>This is a system-generated document and does not require a signature.</div></body></html>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/templates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"templates"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Template",
+			"item": [
+				{
+					"name": "Create Notice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"templateId\": \"67d2f49de82d272bfbeed74e\",\n    \"recipient_name\": \"John Doe\",\n    \"recipient_email\": \"john.doe@example.com\",\n    \"recipient_phone\": \"1234567890\",\n    \"recipient_address\": \"123 Street, City, Country\",\n    \"dynamicData\": {\n        \"notice_number\": \"finance_011\",\n        \"notice_date\": \"2025-03-11\",\n        \"notice_reason\": \"Non-payment of dues\",\n        \"agreement_date\": \"2025-01-01\",\n        \"due_date\": \"2025-03-20\",\n        \"contact_details\": \"contact@example.com\",\n        \"sender_name\": \"Legal Department\",\n        \"sender_designation\": \"Legal Advisor\",\n        \"company_name\": \"ABC Corp\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/notices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"notices"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PDF Generator",
+			"item": [
+				{
+					"name": "Generate PDF",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/generate-pdf/67d2fa831e7591339596cef1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"generate-pdf",
+								"67d2fa831e7591339596cef1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadfile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/download/67d2fa831e7591339596cef1-1741879944651.pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"download",
+								"67d2fa831e7591339596cef1-1741879944651.pdf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "healthCheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/health_check",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"health_check"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
